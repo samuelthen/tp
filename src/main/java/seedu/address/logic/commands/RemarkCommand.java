@@ -64,11 +64,23 @@ public class RemarkCommand extends Command {
     }
 
     /**
-     * Generates a command execution success message based on whether the remark is added to or removed from
-     * {@code personToEdit}.
+     * Checks if the remark has been removed, which is determined by whether the remark's value is empty.
+     *
+     * @return true if the remark has been removed (i.e., the remark is empty), false otherwise.
+     */
+    private boolean isRemarkRemoved() {
+        return remark.value.isEmpty();
+    }
+
+    /**
+     * Generates a success message depending on whether the remark was added or removed.
+     * If the remark is empty, it indicates the removal of the remark; otherwise, it indicates the addition of a remark.
+     *
+     * @param personToEdit The person whose remark has been modified.
+     * @return A formatted success message indicating whether a remark was added or removed.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !remark.value.isEmpty() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
+        String message = isRemarkRemoved() ? MESSAGE_ADD_REMARK_SUCCESS : MESSAGE_DELETE_REMARK_SUCCESS;
         return String.format(message, Messages.format(personToEdit));
     }
 
